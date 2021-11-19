@@ -2,4 +2,3 @@ __pycache__/
 .vscode/
 music/
 config.py
-music.py

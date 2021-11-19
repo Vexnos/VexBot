@@ -369,8 +369,9 @@ async def on_message(message):
               await message.delete()
             except discord.errors.Forbidden:
               await message.channel.send("No permissions to delete messages")
-              pass
-          await message.channel.send("Clear complete")
+              break
+          else:
+            await message.channel.send("Clear complete")
         else:
           await message.channel.send("You need to provide a number")
       else:

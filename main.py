@@ -61,13 +61,12 @@ async def queue_manager(guild):
 
 @client.event
 async def on_ready():
-  print("VexBot initiated")
+  print("Target Acquired")
   channel_log = client.get_channel(833837328430530580)
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
   stop = time.time()
   startup_time = stop-start
-  await channel_log.send(random.choice(["https://tenor.com/view/dancing-robot-michael-jackson-shining-sparkle-gif-17252010", "https://tenor.com/view/daft-punk-thomas-thomas-bass-gif-20746236"]))
-  await channel_log.send("VexBot Intiated")
+  await channel_log.send("Target Acquired")
   print(f"Startup took {startup_time:.2f}s")
   #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
   #await client.change_presence(activity=discord.Streaming(name="Minecraft", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
@@ -91,8 +90,7 @@ async def on_message(message):
     if command == "begone":
       info = await client.application_info()
       if message.author == info.owner:
-        await message.channel.send("https://c.tenor.com/JfegFw1fj_4AAAAC/daftpunk-pataluc.gif")
-        await asyncio.sleep(3)
+        await message.channel.send(random.choice(["Shutting down...", "Goodnight", "Sleep mode activated", "Hybernating..."]))
         for guild in client.guilds:
           voice_client = discord.utils.get(client.voice_clients, guild=guild)
           if voice_client != None:
@@ -101,7 +99,7 @@ async def on_message(message):
         await client.close()
         quit()
       else:
-        await message.channel.send(f"I do not answer to you, {message.author.display_name}")
+        await message.channel.send(f"Stop shooting!")
     
       #Weather command
       '''elif command == "weather":
@@ -186,7 +184,7 @@ async def on_message(message):
         loops[message.guild.id] = 0
         loopqueue[message.guild.id] = 0
         await message.guild.voice_client.disconnect()
-      else: await message.channel.send("I am not in voice")
+      else: await message.channel.send("Target lost")
       #else: await message.channel.send("Stop violating my first amendment rights!")
 
     #Skip Command
@@ -311,7 +309,7 @@ async def on_message(message):
       "rps <your choice here>" : "Play rock, paper, scissors",
       "music" : "See the songs you can play",
       "info <song>" : "Displays the author/s of a specified song, contains featured artists if applicable and the full song name for a specified song.",
-      "begone" : "Realise you have an urge to murder robots : Kills VexBot (How dare you)"}
+      "begone" : "Realise you have an urge to murder robots : Kills Tuddlet (How dare you)"}
       if len(args) > 0:
         if args[0] in commands:
             return await message.channel.send(commands[args[0]])
@@ -337,8 +335,22 @@ async def on_message(message):
       else:
         await message.channel.send("Either you have not entered a track or you have entered too many. Please enter one track")
 
+    #Dab
     elif command == "dab":
       await message.channel.send("<o/")
+
+    #Status Command
+    elif command == "status":
+      await message.channel.send("Template: Hello?")
+      info = await client.application_info()
+      if message.author == info.owner:
+        start_time = time.time()
+        await message.channel.send("Response: Hello")
+        stop_time = time.time()
+        rep_time = stop_time - start_time
+        await message.channel.send(f"Took {rep_time:.2f}s")
+      else:
+        await message.channel.send("Response: Who said that? Noooooooo...")
 
     else:
       await message.channel.send("Invalid Command")

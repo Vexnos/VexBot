@@ -66,7 +66,7 @@ async def on_ready():
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
   stop = time.time()
   startup_time = stop-start
-  await channel_log.send("Target Acquired")
+  await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")
   print(f"Startup took {startup_time:.2f}s")
   #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
   #await client.change_presence(activity=discord.Streaming(name="Minecraft", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
@@ -309,6 +309,8 @@ async def on_message(message):
       "rps <your choice here>" : "Play rock, paper, scissors",
       "music" : "See the songs you can play",
       "info <song>" : "Displays the author/s of a specified song, contains featured artists if applicable and the full song name for a specified song.",
+      "status" : "Check the status of Tuddlet",
+      "clear <limit>" : "Clear messages from a channel : This is an admin command only",
       "begone" : "Realise you have an urge to murder robots : Kills Tuddlet (How dare you)"}
       if len(args) > 0:
         if args[0] in commands:
@@ -350,7 +352,29 @@ async def on_message(message):
         rep_time = stop_time - start_time
         await message.channel.send(f"Took {rep_time:.2f}s")
       else:
-        await message.channel.send("Response: Who said that? Noooooooo...")
+        await message.channel.send(random.choice(["Response: Who said that? Noooooooo...", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
+
+    #Clean Command
+    elif command == "clear":
+      clean_num = 0
+      if message.author.guild_permissions.move_members:
+        if len(args) > 0:
+          try:
+            clean_num = int(args[0])
+          except ValueError:
+            await message.channel.send("Value Error, please try again")
+            pass
+          async for message in message.channel.history(limit=clean_num):
+            try:
+              await message.delete()
+            except discord.errors.Forbidden:
+              await message.channel.send("No permissions to delete messages")
+              pass
+          await message.channel.send("Clear complete")
+        else:
+          await message.channel.send("You need to provide a number")
+      else:
+        await message.channel.send("You do not have permission to remove messages")
 
     else:
       await message.channel.send("Invalid Command")

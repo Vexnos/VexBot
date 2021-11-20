@@ -83,7 +83,8 @@ music = {
     "soul-sanctum": ["music/HollowKnight/SoulSanctum.mp3", 1, "Christopher Larkin", "Soul Sanctum"],
     "zote": ["music/HollowKnight/Zote.mp3", 1, "Christopher Larkin", "Truth, Beauty and Hatred"],
     "drag-me-down": ["music/Drag Me Down.mp3", 1, "One Direction", "Drag Me Down"],
-    "something-about-us": ["music/Something About Us.mp3", 1, "Daft Punk", "Something About Us"]
+    "something-about-us": ["music/Something About Us.mp3", 1, "Daft Punk", "Something About Us"],
+    "never-smile": ["music/Never Smile Again.mp3", 1, "Tommy Dorsey", "I'll Never Smile Again"]
 }
 
 # Cut music

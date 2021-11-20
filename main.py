@@ -62,11 +62,15 @@ async def queue_manager(guild):
 @client.event
 async def on_ready():
   print("Target Acquired")
-  channel_log = client.get_channel(833837328430530580)
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
   stop = time.time()
   startup_time = stop-start
-  await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")
+  try:
+    channel_log = client.get_channel(833837328430530580)
+    await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")
+  except discord.errors.Forbidden:
+    pass
+
   print(f"Startup took {startup_time:.2f}s")
   #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
   #await client.change_presence(activity=discord.Streaming(name="Minecraft", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
@@ -90,7 +94,7 @@ async def on_message(message):
     if command == "begone":
       info = await client.application_info()
       if message.author == info.owner:
-        await message.channel.send(random.choice(["Shutting down...", "Goodnight", "Sleep mode activated", "Hybernating..."]))
+        await message.channel.send(random.choice(["Shutting down...", "Goodnight", "Sleep mode activated", "Hibernating..."]))
         for guild in client.guilds:
           voice_client = discord.utils.get(client.voice_clients, guild=guild)
           if voice_client != None:

@@ -61,6 +61,7 @@ async def queue_manager(guild):
 
 @client.event
 async def on_ready():
+  global channel_log
   print("Target Acquired")
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
   stop = time.time()
@@ -375,7 +376,7 @@ async def on_message(message):
               await message.channel.send("No permissions to delete messages")
               break
           else:
-            await message.channel.send("Clear complete")
+            await channel_log.send("Clear complete")
         else:
           await message.channel.send("You need to provide a number")
       else:

@@ -355,9 +355,9 @@ async def on_message(message):
         await message.channel.send("Response: Hello")
         stop_time = time.time()
         rep_time = stop_time - start_time
-        await message.channel.send(f"Took {rep_time:.2f}s")
+        await message.channel.send(f"Response took {rep_time:.2f}s")
       else:
-        await message.channel.send(random.choice(["Response: Who said that? Noooooooo...", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
+        await message.channel.send(random.choice(["Response: Who said that?", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
 
     #Clean Command
     elif command == "clear":

@@ -105,48 +105,6 @@ async def on_message(message):
         quit()
       else:
         await message.channel.send(f"Stop shooting!")
-    
-      #Weather command
-      '''elif command == "weather":
-
-        weathers = ["raining",
-                    "hailing",
-                    "overcast",
-                    "sunny",
-                    "snowing"]
-
-        weather = random.choice(weathers)
-
-        days = ["monday",
-                "tuesday",
-                "wednesday",
-                "thursday",
-                "friday",
-                "tomorrow",
-                "today",
-                "in 2 days",
-                "in a fortnight",
-                "in a week",
-                "in 3 days",
-                "in 4 days",
-                "in 5 days",
-                "in 6 days",
-                "in a month",
-                "in 2 months",
-                "in a decade",
-                "in a century"]
-
-        day = random.choice(days)
-
-        high = random.randint(-20, 50)
-
-        low = random.randint(-20, 50)
-
-        while (high < low):
-
-          low = random.randint(-20, 50)
-
-        await message.channel.send(f"It will be {weather} {day}, with a high of {high}°C and a low of {low}°C")'''
 
     #Play Command
     elif command == "play":
@@ -284,18 +242,18 @@ async def on_message(message):
         await message.channel.send("You have not provided a valid input")
 
     #Nuke a channel with the Russian flag
-      '''elif command == "nuke":
-        info = await client.application_info()
-        if message.author == info.owner:
-          await message.channel.send("I sincerely apologise for what's about to happen")
-          await asyncio.sleep(2)
-          async for message in message.channel.history():
-            try:
-              await message.add_reaction("🇷🇺")
-            except discord.errors.Forbidden:
-              pass 
-        else:
-          await message.channel.send("Please restrain your bloodlust for destruction!")'''
+    elif command == "nuke":
+      info = await client.application_info()
+      if message.author == info.owner:
+        await message.channel.send("No regrets!")
+        await asyncio.sleep(2)
+        async for message in message.channel.history():
+          try:
+            await message.add_reaction("🇷🇺")
+          except discord.errors.Forbidden:
+            pass 
+      else:
+        await message.channel.send("Please restrain your bloodlust for destruction!")
 
     #Get a list of music
     elif command == "music":

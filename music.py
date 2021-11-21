@@ -85,7 +85,8 @@ music = {
     "drag-me-down": ["music/Drag Me Down.mp3", 1, "One Direction", "Drag Me Down"],
     "something-about-us": ["music/Something About Us.mp3", 1, "Daft Punk", "Something About Us"],
     "never-smile": ["music/Never Smile Again.mp3", 1, "Tommy Dorsey", "I'll Never Smile Again"],
-    "eternal-traveller": ["music/Eternal Traveller.mp3", 1, "Adrian Chifu", "Eternal Traveller"]
+    "eternal-traveller": ["music/Eternal Traveller.mp3", 1, "Adrian Chifu", "Eternal Traveller"],
+    "toxic": ["music/Toxic.mp3", 1, "Britney Spears", "Toxic"]
 }
 
 # Cut music

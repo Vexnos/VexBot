@@ -319,6 +319,8 @@ async def on_message(message):
 
     #Clean Command
     elif command == "clear":
+      banned_clients = [530362316408225817]
+      if message.author in banned_clients: return
       clean_num = 0
       if message.author.guild_permissions.move_members:
         if len(args) > 0:

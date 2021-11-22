@@ -64,6 +64,8 @@ async def on_ready():
   global channel_log
   print("Target Acquired")
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
+  #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
+  #await client.change_presence(activity=discord.Streaming(name="Youtube", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
   stop = time.time()
   startup_time = stop-start
   try:
@@ -73,8 +75,6 @@ async def on_ready():
     pass
 
   print(f"Startup took {startup_time:.2f}s")
-  #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
-  #await client.change_presence(activity=discord.Streaming(name="Minecraft", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
 
 @client.event
 async def on_message(message):

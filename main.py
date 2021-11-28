@@ -34,7 +34,7 @@ async def queue_manager(guild):
   counter = 0
   vc = guild.voice_client
   while ((len(queue) > 0 or (guild.id in loops and loops[guild.id] == 1))) and counter < 60:
-    #play songs
+    # play songs
     if paused[guild.id]:
       del playing[guild.id]
       return await vc.disconnect()
@@ -64,8 +64,8 @@ async def on_ready():
   global channel_log
   print("Target Acquired")
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-  #await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
-  #await client.change_presence(activity=discord.Streaming(name="Youtube", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
+  # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
+  # await client.change_presence(activity=discord.Streaming(name="Youtube", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
   stop = time.time()
   startup_time = stop-start
   try:
@@ -78,8 +78,8 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-  if message.author.bot: return #don't consider other bots
-  #if message.author == client.user: return
+  if message.author.bot: return # don't consider other bots
+  # if message.author == client.user: return
 
   author = message.author.id
   content = " " + message.content.lower() + " "
@@ -91,7 +91,7 @@ async def on_message(message):
     command = words[0].lower()
     args = words[1:]
 
-    #Kill command
+    # Kill command
     if command == "begone":
       info = await client.application_info()
       if message.author == info.owner:
@@ -100,23 +100,23 @@ async def on_message(message):
           voice_client = discord.utils.get(client.voice_clients, guild=guild)
           if voice_client != None:
             await guild.voice_client.disconnect()
-        await client.change_presence(status=discord.Status.offline) #await client.change_presence(activity=discord.Game("Among Us"))
+        await client.change_presence(status=discord.Status.offline) # await client.change_presence(activity=discord.Game("Among Us"))
         await client.close()
         quit()
       else:
         await message.channel.send(f"Stop shooting!")
 
-    #Play Command
+    # Play Command
     elif command == "play":
       guild_id = message.guild.id
       voice = message.author.voice
       if voice == None:
         await message.channel.send("Voice channel is unoccupied")
-        #they are not in a voice channel
+        # they are not in a voice channel
       else:
         if len(args) > 0:
           for name in args:
-          #name = args[0]
+          # name = args[0]
             if name in music.keys():
               location = music[name][0]
               volume = music[name][1]
@@ -130,17 +130,17 @@ async def on_message(message):
           return await message.channel.send("No song specified")
         voice_client = discord.utils.get(client.voice_clients, guild=message.guild)
         if voice_client == None:
-          #not in voice, join the new channel
+          # not in voice, join the new channel
           paused[guild_id] = False
           await voice.channel.connect()
           await queue_manager(message.guild)
         elif message.author.guild_permissions.move_members:
-          #move the bot
+          # move the bot
           await message.guild.voice_client.move_to(voice.channel)
 
-    #Disconnect Command
+    # Disconnect Command
     elif command == "dc" or command == "disconnect":
-      #if message.author.guild_permissions.move_members:
+      # if message.author.guild_permissions.move_members:
       voice_client = discord.utils.get(client.voice_clients, guild=message.guild)
       if voice_client != None:
         queues[message.guild.id] = []
@@ -148,21 +148,21 @@ async def on_message(message):
         loopqueue[message.guild.id] = 0
         await message.guild.voice_client.disconnect()
       else: await message.channel.send("Target lost")
-      #else: await message.channel.send("Stop violating my first amendment rights!")
+      # else: await message.channel.send("Stop violating my first amendment rights!")
 
-    #Skip Command
+    # Skip Command
     elif command == "skip":
       id = message.guild.id
       if message.author.voice == None:
           return await message.channel.send("You are not in voice")
-      #if message.author.guild_permissions.move_members or (id in playing and (playing[id][3] == author or playing[id][3] == 0)):
+      # if message.author.guild_permissions.move_members or (id in playing and (playing[id][3] == author or playing[id][3] == 0)):
       voice_client = discord.utils.get(client.voice_clients, guild=message.guild)
       if voice_client != None:
           message.guild.voice_client.stop()
       else: await message.channel.send("I am not in voice")
-      #else: await message.channel.send("Come on, surely your mother taught you patience")
+      # else: await message.channel.send("Come on, surely your mother taught you patience")
 
-    #Loop Command
+    # Loop Command
     elif command == "loop":
       loopqueue[message.guild.id] = 0
       if message.guild.id in loops:
@@ -172,7 +172,7 @@ async def on_message(message):
           await message.channel.send("The current song will now be looped")
       else: await message.channel.send("Cancelling the current loop")
 
-    #Loopqueue Command
+    # Loopqueue Command
     elif command == "loopqueue":
       loops[message.guild.id] = 0
       if message.guild.id in loopqueue:
@@ -182,7 +182,7 @@ async def on_message(message):
           await message.channel.send("The current queue will now be looped")
       else: await message.channel.send("Cancelling the current loop")
 
-    #Queue Command
+    # Queue Command
     elif command == "queue":
       if message.guild.id in queues:
           queue = queues[message.guild.id] if message.guild.id in queues else []
@@ -194,7 +194,7 @@ async def on_message(message):
           await message.channel.send(result)
       else: await message.channel.send("The queue is empty")
 
-    #Rock, Paper, Scissors
+    # Rock, Paper, Scissors
     elif command == "rps":
       if len(args) > 0:
         user = args[0]
@@ -206,42 +206,42 @@ async def on_message(message):
           response = random.choice(possible_actions)
         await message.channel.send(f"You chose {user}, I chose {response}.")
 
-        #Tie
+        # Tie
         if user == response:
           await message.channel.send(f"Both players selected {user}. It's a tie!")
 
-        #Rock responses
+        # Rock responses
         elif user == "rock":
           if response == "scissors":
             await message.channel.send("Rock smashes scissors. You win.")
           else:
             await message.channel.send("Paper covers rock. You lose!")
         
-        #Paper responses
+        # Paper responses
         elif user == "paper":
           if response == "rock":
             await message.channel.send("Paper covers rock. You win.")
           else:
             await message.channel.send("Scissors cuts paper. You lose!")
 
-        #Scissors responses
+        # Scissors responses
         elif user == "scissors":
           if response == "paper":
             await message.channel.send("Scissors cuts paper. You win.")
           else:
             await message.channel.send("Rock smashes scissors. You lose!")
 
-        #Surprise
+        # Surprise
         elif nuke == 1:
           await message.channel.send("Nuke, I win!")
 
-        #User has not provided a valid input
+        # User has not provided a valid input
         else:
           await message.channel.send("You have not provided a valid input")
       else:
         await message.channel.send("You have not provided a valid input")
 
-    #Nuke a channel with the Russian flag
+    # Nuke a channel with the Russian flag
     elif command == "nuke":
       info = await client.application_info()
       if message.author == info.owner:
@@ -255,11 +255,11 @@ async def on_message(message):
       else:
         await message.channel.send("Please restrain your bloodlust for destruction!")
 
-    #Get a list of music
+    # Get a list of music
     elif command == "music":
       await message.channel.send("There are " + str(len(music.keys())) + " songs loaded (Note: I have to abbreviate some song names because they're too long) : " + str(", ".join(music.keys())))
 
-    #Help command
+    # Help command
     elif command == "help":
       embed = discord.Embed(title="Commands", description="Commands you can utulise")
       commands = {
@@ -274,6 +274,7 @@ async def on_message(message):
       "info <song>" : "Displays the author/s of a specified song, contains featured artists if applicable and the full song name for a specified song.",
       "status" : "Check the status of Tuddlet",
       "clear <limit>" : "Clear messages from a channel : This is an admin command only",
+      "website" : "Get a link to my website!",
       "begone" : "Realise you have an urge to murder robots : Kills Tuddlet (How dare you)"}
       if len(args) > 0:
         if args[0] in commands:
@@ -282,11 +283,11 @@ async def on_message(message):
           embed.add_field(name=prefix+command,value=commands[command])
       await message.channel.send(content=None, embed=embed)
 
-    #Checks against ... error
+    # Checks against prefix error
     elif command == prefix*len(command):
       pass
 
-    #Info Command (For music)
+    # Info Command (For music)
     elif command == "info":
       if len(args) > 0 and len(args) < 2:
         name = args[0]
@@ -300,11 +301,11 @@ async def on_message(message):
       else:
         await message.channel.send("Either you have not entered a track or you have entered too many. Please enter one track")
 
-    #Dab
+    # Dab
     elif command == "dab":
       await message.channel.send("<o/")
 
-    #Status Command
+    # Status Command
     elif command == "status":
       await message.channel.send("Template: Hello?")
       info = await client.application_info()
@@ -317,10 +318,10 @@ async def on_message(message):
       else:
         await message.channel.send(random.choice(["Response: Who said that?", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
 
-    #Clean Command
+    # Clear Command
     elif command == "clear":
       banned_clients = [530362316408225817]
-      if message.author in banned_clients: return
+      if message.author in banned_clients: return # Banned people can't use clear
       clean_num = 0
       if message.author.guild_permissions.move_members:
         if len(args) > 0:
@@ -342,19 +343,23 @@ async def on_message(message):
       else:
         await message.channel.send("You do not have permission to remove messages")
 
+    # Website Command
+    elif command == "website":
+      await message.channel.send("Come visit my website! https://vexnos.github.io")
+
     else:
       await message.channel.send("Invalid Command")
 
   else:
     content = " " + message.content.lower() + " "
 
-  #Keyword Replies
+  # Keyword Replies
   '''if " surprise " in content:
     await message.channel.send("A surprise? I love surprises!")
   if " music " in content:
     await message.channel.send("I can play music for you")'''
 
-  #1 in 100 messages
+  # 1 in 100 messages
   '''hundred = ["https://static3.srcdn.com/wordpress/wp-content/uploads/2020/01/Odo--In-MY-Meme-.jpg?q=50&fit=crop&w=740&h=307&dpr=1.5",
              "https://tenor.com/view/loading-discord-loading-discord-boxes-squares-gif-16187521",
              "Fun fact: if a sentence starts with 'fun fact', you will read the entire sentence",
@@ -366,6 +371,3 @@ async def on_message(message):
     await message.channel.send(onehundred)'''
 
 client.run(token)
-
-#logging channel id: 787123260164669450
-#new logging channel id: 833837328430530580

@@ -69,7 +69,7 @@ async def on_ready():
   stop = time.time()
   startup_time = stop-start
   try:
-    channel_log = client.get_channel(833837328430530580)
+    channel_log = client.get_channel(log_id)
     await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")
   except discord.errors.Forbidden:
     pass
@@ -320,7 +320,6 @@ async def on_message(message):
 
     # Clear Command
     elif command == "clear":
-      banned_clients = [530362316408225817]
       if message.author in banned_clients: return # Banned people can't use clear
       clean_num = 0
       if message.author.guild_permissions.move_members:
@@ -352,22 +351,5 @@ async def on_message(message):
 
   else:
     content = " " + message.content.lower() + " "
-
-  # Keyword Replies
-  '''if " surprise " in content:
-    await message.channel.send("A surprise? I love surprises!")
-  if " music " in content:
-    await message.channel.send("I can play music for you")'''
-
-  # 1 in 100 messages
-  '''hundred = ["https://static3.srcdn.com/wordpress/wp-content/uploads/2020/01/Odo--In-MY-Meme-.jpg?q=50&fit=crop&w=740&h=307&dpr=1.5",
-             "https://tenor.com/view/loading-discord-loading-discord-boxes-squares-gif-16187521",
-             "Fun fact: if a sentence starts with 'fun fact', you will read the entire sentence",
-             "https://media1.tenor.com/images/23aeaaa34afd591deee6c163c96cb0ee/tenor.gif"]
-
-  onehundred = random.choice(hundred)
-
-  if random.randint(1,100) == 1:
-    await message.channel.send(onehundred)'''
 
 client.run(token)

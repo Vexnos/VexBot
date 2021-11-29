@@ -314,7 +314,10 @@ async def on_message(message):
         await message.channel.send("Response: Hello")
         stop_time = time.time()
         rep_time = stop_time - start_time
-        await message.channel.send(f"Response took {rep_time:.2f}s")
+        uptime = random.randint(1, 100)
+        ping = client.latency * 1000
+        distance = ping * 299792
+        await message.channel.send(f"Response took {rep_time:.2f}s\nPing: {ping:.0f} ms\nDistance: {distance:.0f} km\nUptime: {uptime} hours")
       else:
         await message.channel.send(random.choice(["Response: Who said that?", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
 

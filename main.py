@@ -334,10 +334,10 @@ async def on_message(message):
             pass
           try:
             await message.channel.purge(limit=amount)
+            await channel_log.send("Clear complete")
           except discord.errors.Forbidden:
             await message.channel.send("No permissions to delete messages")
-          else:
-            await channel_log.send("Clear complete")
+            pass
         else:
           await message.channel.send("You need to provide a number")
       else:

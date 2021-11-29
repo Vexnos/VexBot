@@ -324,20 +324,18 @@ async def on_message(message):
     # Clear Command
     elif command == "clear":
       if message.author in banned_clients: return # Banned people can't use clear
-      clean_num = 0
+      amount = 0
       if message.author.guild_permissions.move_members:
         if len(args) > 0:
           try:
-            clean_num = int(args[0])
+            amount = int(args[0])
           except ValueError:
             await message.channel.send("Value Error, please try again")
             pass
-          async for message in message.channel.history(limit=clean_num):
-            try:
-              await message.delete()
-            except discord.errors.Forbidden:
-              await message.channel.send("No permissions to delete messages")
-              break
+          try:
+            await message.channel.purge(limit=amount)
+          except discord.errors.Forbidden:
+            await message.channel.send("No permissions to delete messages")
           else:
             await channel_log.send("Clear complete")
         else:

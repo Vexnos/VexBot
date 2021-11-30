@@ -353,4 +353,12 @@ async def on_message(message):
   else:
     content = " " + message.content.lower() + " "
 
+  # Swearing check
+  for swear in swears:
+    if swear in content:
+      try:
+        await message.delete()
+      except discord.errors.Forbidden: # No perms to delete messages
+        pass
+
 client.run(token)

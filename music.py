@@ -27,6 +27,7 @@ music = {
   "lastgoodbye": ["music/LastGoodbye.mp3", 1, "Tobyfox", "Last Goodbye"],
   "laststand": ["music/laststand.mp3", 1, "Andreas Waldetoft", "Last Stand"],
   "megalovania": ["music/Megalovania.mp3", 1, "Tobyfox", "Megalovania"],
+  "sans": ["music/sans.mp3", 1, "TobyFox", "Sans"],
   "respite": ["music/Respite.mp3", 1, "Tobyfox", "Respite"],
   "ruins": ["music/Ruins.mp3", 1, "Tobyfox", "Ruins"],
   "save": ["music/SAVE.mp3", 1, "Tobyfox", "Save The World"],

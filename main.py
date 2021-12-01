@@ -316,8 +316,7 @@ async def on_message(message):
         rep_time = stop_time - start_time
         uptime = random.randint(1, 100)
         ping = client.latency * 1000
-        distance = ping * 299792
-        await message.channel.send(f"Response took {rep_time:.2f}s\nPing: {ping:.0f} ms\nDistance: {distance:.0f} km\nUptime: {uptime} hours")
+        await message.channel.send(f"Response took {rep_time:.2f}s\nPing: {ping:.0f} ms\nUptime: {uptime} hours")
       else:
         await message.channel.send(random.choice(["Response: Who said that?", "Response: I'm not defective!", "Response: You can't fire me, I quit!"]))
 
@@ -352,6 +351,10 @@ async def on_message(message):
 
   else:
     content = " " + message.content.lower() + " "
+
+  # Keyword replies
+  if "<@!832126416714727425>" in content or "<@832126416714727425>" in content:
+    await message.channel.send("Stop shooting!")
 
   # Swearing check
   for swear in swears:

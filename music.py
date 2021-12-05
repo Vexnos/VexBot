@@ -84,6 +84,9 @@ music = {
   "toxic": ["music/Toxic.mp3", 1, "Britney Spears", "Toxic"],
   "viva-la-vida": ["music/Viva la vida.mp3", 1, "Coldplay", "Viva la vida"],
   "violet-hill": ["music/Violet Hill.mp3", 1, "Coldplay", "Violet Hill"],
+  "fireflies": ["music/Fireflies.mp3", 1, "Owl City", "Fireflies"],
+  "missing-piece": ["music/Missing Piece.mp3", 1, "Vance Joy", "Missing Piece"],
+  "i-lived": ["music/I Lived.mp3", 1, "OneRepublic", "I Lived"],
 }
 
 # Cut music

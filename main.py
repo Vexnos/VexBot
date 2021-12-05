@@ -270,6 +270,7 @@ async def on_message(message):
       "loop" : "Become Groundhog day : Loop the current song, this command is a toggle",
       "loopqueue" : "Groundhog Day: DLC : Loop the current queue, this command is a toggle",
       "rps <your choice here>" : "Play rock, paper, scissors",
+      "8ball <question>" : "Ask a question and shake the magic 8 ball!",
       "music" : "See the songs you can play",
       "info <song>" : "Displays the author/s of a specified song, contains featured artists if applicable and the full song name for a specified song.",
       "status" : "Check the status of Tuddlet",
@@ -346,6 +347,48 @@ async def on_message(message):
     elif command == "website":
       await message.channel.send("Come visit my website! https://vexnos.github.io")
 
+    # Spam 
+    elif command == "spam":
+      info = await client.application_info()
+      if message.author == info.owner:
+        if len(args) > 0:
+          spam_message = " ".join(args[1:])
+          try:
+            limit = int(args[0])
+          except ValueError:
+            pass
+          for _ in range(limit):
+            await message.channel.send(f"{spam_message}")
+        else:
+          pass
+      else:
+        await message.channel.send("No")
+
+    # Magic 8 ball command
+    elif command == "8ball":
+      if len(args) > 0:
+        question = " ".join(args[0:])
+        responses = ["It is certain",
+                     "It is decidedly so",
+                     "Without a doubt",
+                     "Yes definitely",
+                     "You may rely on it",
+                     "Reply hazy, try again",
+                     "Ask again later",
+                     "Better not tell you now",
+                     "Cannot predict now",
+                     "Concentrate and ask again",
+                     "Don't count on it",
+                     "My reply is no",
+                     "My sources say no",
+                     "Outlook not so good",
+                     "Very doubtful"]
+
+        await message.channel.send(f"Question: {question}\nAnswer: {random.choice(responses)}")
+      else:
+        await message.channel.send("You haven't provided a question!")
+    
+    # Invalid Command
     else:
       await message.channel.send("Invalid Command")
 

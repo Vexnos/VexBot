@@ -73,6 +73,13 @@ async def on_ready():
     await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")
   except discord.errors.Forbidden:
     pass
+  for guild in client.guilds:
+    bot = guild.get_member(client.user.id)
+    if bot.nick != "":
+      try:
+        await bot.edit(nick="")
+      except discord.errors.Forbidden:
+        pass
 
   print(f"Startup took {startup_time:.2f}s")
 
@@ -368,25 +375,48 @@ async def on_message(message):
     elif command == "8ball":
       if len(args) > 0:
         question = " ".join(args[0:])
-        responses = ["It is certain",
-                     "It is decidedly so",
-                     "Without a doubt",
-                     "Yes definitely",
-                     "You may rely on it",
-                     "Reply hazy, try again",
-                     "Ask again later",
-                     "Better not tell you now",
-                     "Cannot predict now",
-                     "Concentrate and ask again",
-                     "Don't count on it",
-                     "My reply is no",
-                     "My sources say no",
-                     "Outlook not so good",
-                     "Very doubtful"]
+        if question.endswith("?"):
+          responses = ["It is certain",
+                      "It is decidedly so",
+                      "Without a doubt",
+                      "Yes definitely",
+                      "You may rely on it",
+                      "Reply hazy, try again",
+                      "Ask again later",
+                      "Better not tell you now",
+                      "Cannot predict now",
+                      "Concentrate and ask again",
+                      "Don't count on it",
+                      "My reply is no",
+                      "My sources say no",
+                      "Outlook not so good",
+                      "Very doubtful"]
 
-        await message.channel.send(f"Question: {question}\nAnswer: {random.choice(responses)}")
+          await message.channel.send(f"Question: {question}\nAnswer: {random.choice(responses)}")
+        else:
+          await message.channel.send("That's not a question")
       else:
         await message.channel.send("You haven't provided a question!")
+
+    # Change Nickname
+    elif command == "nick":
+      info = await client.application_info()
+      if message.author == info.owner:
+        if len(args) > 0:
+          if "!" in args[0]: # Author is on PC
+            id = int(args[0][3:-1])
+          else: # Author is on Mobile
+            id = int(args[0][2:-1])
+          member = message.guild.get_member(id)
+          nick = " ".join(args[1:])
+          try:
+            await member.edit(nick=nick)
+          except discord.errors.Forbidden:
+            await message.channel.send("No perms to change nickname")
+        else:
+          await message.channel.send("You haven't entered anything")
+      else:
+        pass
     
     # Invalid Command
     else:
@@ -394,10 +424,6 @@ async def on_message(message):
 
   else:
     content = " " + message.content.lower() + " "
-
-  # Keyword replies
-  if "<@!832126416714727425>" in content or "<@832126416714727425>" in content:
-    await message.channel.send("Stop shooting!")
 
   # Swearing check
   for swear in swears:

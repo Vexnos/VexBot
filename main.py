@@ -181,23 +181,35 @@ async def on_message(message):
 
     # Loop Command
     elif command == "loop":
-      loopqueue[message.guild.id] = 0
-      if message.guild.id in loops:
+      if len(args) > 0:
+        if args[0] == "queue": # Loop Queue
+          loops[message.guild.id] = 0
+          if message.guild.id in loopqueue:
+            loopqueue[message.guild.id] = 1 - loopqueue[message.guild.id]
+          else: loopqueue[message.guild.id] = 1
+          if loopqueue[message.guild.id] == 1:
+            await message.channel.send("The current queue will now be looped")
+          else: await message.channel.send("Cancelling the current loop")
+        else:
+          pass
+      else: # Loop Track
+        loopqueue[message.guild.id] = 0
+        if message.guild.id in loops:
           loops[message.guild.id] = 1 - loops[message.guild.id]
-      else: loops[message.guild.id] = 1
-      if loops[message.guild.id] == 1:
+        else: loops[message.guild.id] = 1
+        if loops[message.guild.id] == 1:
           await message.channel.send("The current song will now be looped")
-      else: await message.channel.send("Cancelling the current loop")
+        else: await message.channel.send("Cancelling the current loop")
 
-    # Loopqueue Command
-    elif command == "loopqueue":
-      loops[message.guild.id] = 0
-      if message.guild.id in loopqueue:
+      # Loopqueue Command
+      '''elif command == "loopqueue":
+        loops[message.guild.id] = 0
+        if message.guild.id in loopqueue:
           loopqueue[message.guild.id] = 1 - loopqueue[message.guild.id]
-      else: loopqueue[message.guild.id] = 1
-      if loopqueue[message.guild.id] == 1:
+        else: loopqueue[message.guild.id] = 1
+        if loopqueue[message.guild.id] == 1:
           await message.channel.send("The current queue will now be looped")
-      else: await message.channel.send("Cancelling the current loop")
+        else: await message.channel.send("Cancelling the current loop")'''
 
     # Queue Command
     elif command == "queue":
@@ -311,10 +323,10 @@ async def on_message(message):
       if len(args) > 0 and len(args) < 2:
         name = args[0]
         if name in music.keys():
-          if len(music[name]) > 2:
+          if len(music[name][2]) > 2:
             await message.channel.send(f"Author: {music[name][2]}\nFull Song Name: {music[name][3]}\n")
           else:
-            await message.channel.send("Author: this track's author is unknown")
+            await message.channel.send(f"Author: this track's author is unknown\nFull Song Name: {music[name][3]}\n")
         else:
           await message.channel.send("Invalid track, please enter again.")
       else:
@@ -365,6 +377,28 @@ async def on_message(message):
     # Website Command
     elif command == "website":
       await message.channel.send("Come visit my website! https://vexnos.github.io")
+
+      # Spam Command
+      '''elif command == "spam":
+        if message.author.guild_permissions.manage_messages:
+          if len(args) > 0:
+            try:
+              amount = int(args[0])
+            except ValueError:
+              pass
+            if amount <= 10:
+              msg = " ".join(args[1:])
+              for _ in range(amount):
+                await message.channel.send(msg)
+            else:
+              await message.channel.send("Cmon isn't that a little excessive?")
+              print(f"{message.author.display_name} tried to spam {amount} times")
+              pass
+          else:
+            await message.channel.send("Provide an amount and message")
+        else:
+          await message.channel.send("No")
+          print(f"{message.author.display_name} tried to spam")'''
 
     # Magic 8 ball command
     elif command == "8ball":

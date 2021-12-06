@@ -92,6 +92,7 @@ music = {
   "empty-town": ["music/Empty Town.mp3", 1, "Tobyfox", "Empty Town"],
   "the-chase": ["music/The Chase.mp3", 1, "Tobyfox", "The Chase"],
   "aotkq": ["music/Attack of the Killer Queen.mp3", 1, "Tobyfox", "Attack of the Killer Queen"],
+  "fohad": ["music/Field of Hopes and Dreams.mp3", 1, "Tobyfox", "Field of Hopes and Dreams"],
 }
 
 # Cut music

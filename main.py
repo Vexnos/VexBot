@@ -121,6 +121,7 @@ async def on_message(message):
         quit()
       else:
         await message.channel.send(f"Stop shooting!")
+        print(f"{message.author.display_name} attempted to murder me!")
 
     # Play Command
     elif command == "play":
@@ -340,9 +341,9 @@ async def on_message(message):
 
     # Clear Command
     elif command == "clear":
-      if message.author in banned_clients: return # Banned people can't use clear
+      if message.author.id in banned_clients: return # Banned people can't use clear
       amount = 0
-      if message.author.guild_permissions.move_members:
+      if message.author.guild_permissions.manage_messages:
         if len(args) > 0:
           try:
             amount = int(args[0])
@@ -394,7 +395,7 @@ async def on_message(message):
 
     # Change Nickname
     elif command == "nick":
-      if message.author.guild_permissions.move_members:
+      if message.author.guild_permissions.manage_nicknames:
         if len(args) > 0:
           if "!" in args[0]: # Author is on PC
             id = int(args[0][3:-1])

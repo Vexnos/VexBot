@@ -87,6 +87,11 @@ music = {
   "fireflies": ["music/Fireflies.mp3", 1, "Owl City", "Fireflies"],
   "missing-piece": ["music/Missing Piece.mp3", 1, "Vance Joy", "Missing Piece"],
   "i-lived": ["music/I Lived.mp3", 1, "OneRepublic", "I Lived"],
+  "mii-plaza": ["music/Mii Plaza.mp3", 1, "NA", "Mii Plaza"],
+  "the-legend": ["music/The Legend.mp3", 1, "Tobyfox", "The Legend"],
+  "empty-town": ["music/Empty Town.mp3", 1, "Tobyfox", "Empty Town"],
+  "the-chase": ["music/The Chase.mp3", 1, "Tobyfox", "The Chase"],
+  "aotkq": ["music/Attack of the Killer Queen.mp3", 1, "Tobyfox", "Attack of the Killer Queen"],
 }
 
 # Cut music

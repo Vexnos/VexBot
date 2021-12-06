@@ -84,6 +84,15 @@ async def on_ready():
   print(f"Startup took {startup_time:.2f}s")
 
 @client.event
+async def on_member_update(before,after):
+  if after.id == client.user.id and after.nick is not None:
+    try:
+      await after.edit(nick=None)
+    except discord.errors.Forbidden:
+      print("Changing nickname failed")
+      pass
+
+@client.event
 async def on_message(message):
   if message.author.bot: return # don't consider other bots
   # if message.author == client.user: return
@@ -280,10 +289,11 @@ async def on_message(message):
       "8ball <question>" : "Ask a question and shake the magic 8 ball!",
       "music" : "See the songs you can play",
       "info <song>" : "Displays the author/s of a specified song, contains featured artists if applicable and the full song name for a specified song.",
-      "status" : "Check the status of Tuddlet",
+      "status" : "Check the status of Tuddlet : Owner command only",
       "clear <limit>" : "Clear messages from a channel : This is an admin command only",
+      "nick <user> <nickname>" : "Change a user's nickname : This is an admin command only",
       "website" : "Get a link to my website!",
-      "begone" : "Realise you have an urge to murder robots : Kills Tuddlet (How dare you)"}
+      "begone" : "Realise you have an urge to murder robots : Kills Tuddlet (How dare you) : Owner command only"}
       if len(args) > 0:
         if args[0] in commands:
             return await message.channel.send(commands[args[0]])
@@ -349,27 +359,11 @@ async def on_message(message):
           await message.channel.send("You need to provide a number")
       else:
         await message.channel.send("You do not have permission to remove messages")
+        print(f"{message.author.display_name} attempted to clear messages")
 
     # Website Command
     elif command == "website":
       await message.channel.send("Come visit my website! https://vexnos.github.io")
-
-    # Spam 
-    elif command == "spam":
-      info = await client.application_info()
-      if message.author == info.owner:
-        if len(args) > 0:
-          spam_message = " ".join(args[1:])
-          try:
-            limit = int(args[0])
-          except ValueError:
-            pass
-          for _ in range(limit):
-            await message.channel.send(f"{spam_message}")
-        else:
-          pass
-      else:
-        await message.channel.send("No")
 
     # Magic 8 ball command
     elif command == "8ball":
@@ -400,8 +394,7 @@ async def on_message(message):
 
     # Change Nickname
     elif command == "nick":
-      info = await client.application_info()
-      if message.author == info.owner:
+      if message.author.guild_permissions.move_members:
         if len(args) > 0:
           if "!" in args[0]: # Author is on PC
             id = int(args[0][3:-1])
@@ -416,7 +409,8 @@ async def on_message(message):
         else:
           await message.channel.send("You haven't entered anything")
       else:
-        pass
+        await message.channel.send("You do not have permission to execute this command")
+        print(f"{message.author.display_name} attempted a nick change but lacked permission")
     
     # Invalid Command
     else:

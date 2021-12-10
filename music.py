@@ -93,6 +93,12 @@ music = {
   "the-chase": ["music/The Chase.mp3", 1, "Tobyfox", "The Chase"],
   "aotkq": ["music/Attack of the Killer Queen.mp3", 1, "Tobyfox", "Attack of the Killer Queen"],
   "fohad": ["music/Field of Hopes and Dreams.mp3", 1, "Tobyfox", "Field of Hopes and Dreams"],
+  "amogus": ["music/Amogus.mp3", 1, "NA", "Amogus"],
+  "basement-burning": ["music/Basement is Burning.mp3", 1, "Mark Hawkins", "The Basement is Burning"],
+  "msbwy": ["music/Music Sounds Better With You.mp3", 1, "Stardust", "Music Sounds Better with You"],
+  "fight-dirty": ["music/Fight Dirty.mp3", 1, "Salvatore Ganacci", "Fight Dirty"],
+  "clocks": ["music/Clocks.mp3", 1, "Coldplay", "Clocks"],
+  "shot-at-the-night": ["music/Shot at the Night.mp3", 1, "The Killers", "Shot at the Night"],
 }
 
 # Cut music

@@ -94,7 +94,7 @@ async def on_member_update(before,after):
 
 @client.event
 async def on_message(message):
-  if message.author.bot: return # don't consider other bots
+  if message.author.bot or message.author.id in banned_clients: return # don't consider other bots or banned clients
   # if message.author == client.user: return
 
   author = message.author.id
@@ -378,27 +378,23 @@ async def on_message(message):
     elif command == "website":
       await message.channel.send("Come visit my website! https://vexnos.github.io")
 
-      # Spam Command
-      '''elif command == "spam":
-        if message.author.guild_permissions.manage_messages:
-          if len(args) > 0:
-            try:
-              amount = int(args[0])
-            except ValueError:
-              pass
-            if amount <= 10:
-              msg = " ".join(args[1:])
-              for _ in range(amount):
-                await message.channel.send(msg)
-            else:
-              await message.channel.send("Cmon isn't that a little excessive?")
-              print(f"{message.author.display_name} tried to spam {amount} times")
-              pass
-          else:
-            await message.channel.send("Provide an amount and message")
+    # Spam Command
+    elif command == "spam":
+      info = await client.application_info()
+      if message.author == info.owner:
+        if len(args) > 0:
+          try:
+            amount = int(args[0])
+          except ValueError:
+            pass
+          msg = " ".join(args[1:])
+          for _ in range(amount):
+            await message.channel.send(msg)
         else:
-          await message.channel.send("No")
-          print(f"{message.author.display_name} tried to spam")'''
+          await message.channel.send("Provide an amount and message")
+      else:
+        await message.channel.send("No")
+        print(f"{message.author.display_name} tried to spam in {message.channel} in {message.guild}")
 
     # Magic 8 ball command
     elif command == "8ball":

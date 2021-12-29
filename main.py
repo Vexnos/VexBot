@@ -16,7 +16,7 @@ import time
 from config import *
 from music import *
 
-start = time.time()
+start = time.perf_counter()
 
 intents = discord.Intents.default()
 intents.members = True
@@ -66,8 +66,7 @@ async def on_ready():
   await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
   # await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="the economy plummet"), status=discord.Status.do_not_disturb)
   # await client.change_presence(activity=discord.Streaming(name="Youtube", url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"))
-  stop = time.time()
-  startup_time = stop-start
+  startup_time = time.perf_counter() - start
   try:
     channel_log = client.get_channel(log_id)
     await channel_log.send(f"Target Acquired\nStartup took {startup_time:.2f}s\n")

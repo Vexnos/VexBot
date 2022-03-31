@@ -16,6 +16,49 @@ import time
 from config import *
 from music import *
 
+countries = ["Iceland",
+              "Faroe Islands",
+              "Portugal",
+              "Spain",
+              "Andorra",
+              "France",
+              "Ireland",
+              "United Kingdom",
+              "Switzerland",
+              "Italy",
+              "Luxembourg",
+              "Belgium",
+              "Netherlands",
+              "Germany",
+              "Poland",
+              "Czechia",
+              "Slovakia",
+              "Austria",
+              "Hungary",
+              "Denmark",
+              "Norway",
+              "Sweden",
+              "Finland",
+              "Slovenia",
+              "Croatia",
+              "Bosnia & Herzegovina",
+              "Montenegro",
+              "Serbia",
+              "Kosovo",
+              "North Macedonia",
+              "Albania",
+              "Greece",
+              "Turkey",
+              "Bulgaria",
+              "Romania",
+              "Moldova",
+              "Estonia",
+              "Latvia",
+              "Lithuania",
+              "Belarus",
+              "Ukraine",
+              "Russia"]
+
 start = time.perf_counter()
 
 intents = discord.Intents.default()
@@ -378,22 +421,22 @@ async def on_message(message):
       await message.channel.send("Come visit my website! https://vexnos.github.io")
 
     # Spam Command
-    elif command == "spam":
-      info = await client.application_info()
-      if message.author == info.owner:
-        if len(args) > 0:
-          try:
-            amount = int(args[0])
-          except ValueError:
-            pass
-          msg = " ".join(args[1:])
-          for _ in range(amount):
-            await message.channel.send(msg)
+      '''elif command == "spam":
+        info = await client.application_info()
+        if message.author == info.owner:
+          if len(args) > 0:
+            try:
+              amount = int(args[0])
+            except ValueError:
+              pass
+            msg = " ".join(args[1:])
+            for _ in range(amount):
+              await message.channel.send(msg)
+          else:
+            await message.channel.send("Provide an amount and message")
         else:
-          await message.channel.send("Provide an amount and message")
-      else:
-        await message.channel.send("No")
-        print(f"{message.author.display_name} tried to spam in {message.channel} in {message.guild}")
+          await message.channel.send("No")
+          print(f"{message.author.display_name} tried to spam in {message.channel} in {message.guild}")'''
 
     # Magic 8 ball command
     elif command == "8ball":
@@ -441,6 +484,62 @@ async def on_message(message):
       else:
         await message.channel.send("You do not have permission to execute this command")
         print(f"{message.author.display_name} attempted a nick change but lacked permission")
+
+    # Actions command for Battle Royale
+    # Actions include War, Alliance, Ideology
+    elif command == "action":
+      actions = ["war", "alliance", "ideology"]
+      action = random.choice(actions)
+      if action == "alliance":
+        country1 = random.choice(countries)
+        country2 = random.choice(countries)
+        while country2 == country1:
+          country2 = random.choice(countries)
+        await message.channel.send(f"{country1} allies with {country2}!")
+      elif action == "war":
+        directions = ["Northerly",
+                      "Northeasterly",
+                      "Easterly",
+                      "Southeasterly",
+                      "Southerly",
+                      "Southwesterly",
+                      "Westerly",
+                      "Northwesterly"]
+        country = random.choice(countries)
+        await message.channel.send(f"{country} will invade in a {random.choice(directions)} direction")
+      elif action == "ideology":
+        ideologies = ["Democratic",
+                      "Communist",
+                      "Fascist",
+                      "Monarchy",
+                      "Dictatorship",
+                      "Oligarchic",
+                      "Autocratic",
+                      "Theocratic"]
+        country = random.choice(countries)
+        ideology = random.choice(ideologies)
+        await message.channel.send(f"{country} has suffered a revolution and has turned into a {ideology} state!")
+      else:
+        pass
+
+    # Invade command for Battle Royale
+    elif command == "invade":
+      name = " ".join(args)
+      if len(args) > 0:
+        if name in countries:
+          countries.remove(name)
+          await message.channel.send(f"{name} has been successfully invaded")
+        else:
+          await message.channel.send("Country does not exist")
+      else:
+        await message.channel.send("You failed to provide a country!")
+
+    # Survivor command for Battle Royale
+    elif command == "survivors":
+      if len(countries) > 1:
+        await message.channel.send("There are " + str(len(countries)) + " survivors remaining: " + str(", ".join(countries)))
+      else:
+        await message.channel.send(countries[0])
     
     # Invalid Command
     else:
